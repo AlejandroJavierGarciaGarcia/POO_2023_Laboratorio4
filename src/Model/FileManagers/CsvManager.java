@@ -13,7 +13,7 @@ import Model.BasicObjects.User;
 
 public class CsvManager implements IFileManager{
     
-        final private String path = "src/DB/DB.csv";
+        final private String path = "src\\DB\\DB.csv";
     
         public CsvManager(){}
 
@@ -30,11 +30,16 @@ public class CsvManager implements IFileManager{
                 for (User user : users){
                     String line = "";
                     if (user instanceof Estandar){
+                        System.out.println("Estandar guardado");
                         line = "Estandar," + user.getName() + "," + user.getPassword();
                     }else if (user instanceof Premiun){
+                        System.out.println("Premiun guardado");
                         line = "Premiun," + user.getName() + "," + user.getPassword();
                     }
                     data.add(line);
+                }
+                for (String line : data){
+                    writer.write(line + "\n");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -61,4 +66,5 @@ public class CsvManager implements IFileManager{
             }
             return users;
         }
+
 }

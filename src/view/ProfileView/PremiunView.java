@@ -23,6 +23,7 @@ public class PremiunView implements IUserView{
     @Override
     public void View() throws IOException, ParserConfigurationException {
         while(true){
+            System.out.print("\033[H\033[2J");  
             System.out.flush();
             System.out.println("Bienvenido a la vista de usuario premiun");
             System.err.println("Usuario: " + User.getName() + " Tipo: Premiun");
@@ -30,10 +31,11 @@ public class PremiunView implements IUserView{
             System.out.println("2. Cambiar Contraseña");
             System.out.println("3. Entrar a modo prestamos");
             System.out.println("4. Entrar a modo entregas");
+            System.out.println("5. Salir");
 
             int option = 0;
 
-            while (option < 1 || option > 4){
+            while (option < 1 || option > 5){
                 System.out.print("Ingrese una opcion: ");
                 option = scanner.nextInt();
             }
@@ -60,19 +62,20 @@ public class PremiunView implements IUserView{
     }
 
     @Override
-    public void ModoPrestamo() throws IOException {
+    public void ModoPrestamo() throws IOException, ParserConfigurationException {
         while(true){
+            System.out.print("\033[H\033[2J");  
             System.out.flush();
             System.out.println("1. Definir Dia de entrega");
             System.out.println("2. Definir Horario de entrega (AM/PM)");
             System.out.println("3. Imprimir listado de prestamos");
             System.out.println("4. Seleccionar Direccion de envio");
+            System.out.println("5. Salir");
 
             int option = 0;
-            while (option < 1 || option > 4){
+            while (option < 1 || option > 5){
                 System.out.print("Ingrese una opcion: ");
-                option = System.in.read();
-                option = Integer.parseInt(String.valueOf((char) option));
+                option = scanner.nextInt();
             }
 
             switch (option){
@@ -117,23 +120,28 @@ public class PremiunView implements IUserView{
                     String direccion = System.console().readLine();
                     User.setDomicilio(direccion);
                     break;
+                
+                case 5:
+                    View();
+                    break;
             }
         }
     }
 
     @Override
-    public void ModoSeleccion() throws IOException {
+    public void ModoSeleccion() throws IOException, ParserConfigurationException {
         while(true){
+            System.out.print("\033[H\033[2J");  
             System.out.flush();
             System.out.println("1. Agregar Libro");
             System.out.println("2. Agregar Revista");
             System.out.println("3. Vaciar Lista");
+            System.out.println("4. Salir");
 
             int option = 0;
-            while (option < 1 || option > 3){
+            while (option < 1 || option > 4){
                 System.out.print("Ingrese una opcion: ");
-                option = System.in.read();
-                option = Integer.parseInt(String.valueOf((char) option));
+                option = scanner.nextInt();
             }
             
             switch (option){
@@ -161,6 +169,9 @@ public class PremiunView implements IUserView{
                     break;
                 case 3:
                     User.EmptyList();
+                    break;
+                case 4:
+                    View();
                     break;
             }
         }

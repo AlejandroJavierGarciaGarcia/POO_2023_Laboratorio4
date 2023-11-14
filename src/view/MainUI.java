@@ -21,7 +21,8 @@ public class MainUI {
 
     public void View() throws IOException, ParserConfigurationException{
         while (true){
-            System.out.flush();
+            System.out.print("\033[H\033[2J");  
+            System.out.flush(); 
             System.out.println("Bienvenido a la Biblioteca");
             System.out.println("1. Iniciar Sesion");
             System.out.println("2. Registrarse");
@@ -30,12 +31,14 @@ public class MainUI {
             int option = 0;
             while (option != 3){
                 option = 0;
-                while (option < 1 || option > 3){
+
                     System.out.print("Ingrese una opcion: ");
                     option = scanner.nextInt();
-                }
+
                 switch (option){
                     case 1:
+                    
+                        System.out.print("\033[H\033[2J");  
                         System.out.flush();
                         System.out.println(option);
                         System.out.println("Ingrese su nombre de usuario: ");
@@ -56,7 +59,9 @@ public class MainUI {
                         }
                         break;
                     case 2:
-                        System.out.flush();
+
+                        System.out.print("\033[H\033[2J");  
+                        System.out.flush();  
                         System.out.println("Que Tipo de Usuario Desea Crear?");
                         System.out.println("1. Estandar");
                         System.out.println("2. Premiun");
@@ -67,6 +72,8 @@ public class MainUI {
                             System.out.print("Ingrese una opcion: ");
                             Opcion = scanner.nextInt();
                         }
+                        System.out.print("\033[H\033[2J");
+                        System.out.flush();  
                         System.out.println("Ingrese su nombre de usuario: ");
                         String names = System.console().readLine();
                         System.out.println("Ingrese su contraseña: ");
@@ -83,18 +90,22 @@ public class MainUI {
                             case 1:
                                 Estandar estandar = new Estandar(names, passwords);
                                 users.add(estandar);
+                                csvManager.SaveUser(users);
+                                System.out.println(users);
                                 RegisterManager.RegisterEstandar(estandar);
                                 break;
                             case 2:
                                 Premiun premiun = new Premiun(names, passwords);
                                 users.add(premiun);
+                                csvManager.SaveUser(users);
+                                System.out.println(users);
                                 RegisterManager.RegisterPremiun(premiun);
                                 break;
                         }
                         break;
+                    
                     case 3:
-                        csvManager.SaveUser(users);
-                        System.exit(0);
+                        System.out.print("Adios");
                         break;
                     default:
                         break;
