@@ -1,0 +1,4 @@
+username,password,name,isPremium
+user1,pass1,name1,false
+user2,pass2,name2,true
+pass3,name3,true,user3

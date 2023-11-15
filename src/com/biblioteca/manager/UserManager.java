@@ -1,22 +1,75 @@
 package com.biblioteca.manager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
+import com.biblioteca.bean.BaseUser;
+import com.biblioteca.bean.PremiumUser;
+import com.biblioteca.bean.User;
+import com.biblioteca.controller.CSVController;
 
 public class UserManager {
-    private Map<String, String> userCredentials = new HashMap<>();
+    private List<HashMap<String, String>> userCredentials = new ArrayList<HashMap<String, String>>();
+    public User activeUser = null;
 
-    public void addUser(String username, String password) {
-        userCredentials.put(username, password);
-        // Llama al método export para guardar el nuevo usuario en el archivo CSV
+    public Boolean addUser(String username, String password, String name, boolean isPremium) {
+        List<User> userList = loadUsers();
+        for (User user : userList) {
+            if (user.getUser().equals(username)) {
+                activeUser = user;
+                return false;
+            }
+        }
+        HashMap<String, String> newUser = new HashMap<>();
+        newUser.put("username", username);
+        newUser.put("password", password);
+        newUser.put("name", name);
+        newUser.put("isPremium", String.valueOf(isPremium));
+        appendData(newUser);
+        return true;
     }
 
     public boolean checkUser(String username, String password) {
-        return userCredentials.containsKey(username) && userCredentials.get(username).equals(password);
+        List<User> userList = loadUsers();
+
+        for (User user : userList) {
+            if (user.getUser().equals(username) && user.getPassword().equals(password)) {
+                activeUser = user;
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void loadUsers() {
-        // Llama al método import para cargar los usuarios desde el archivo CSV
-        // Rellena userCredentials con los datos
+    private List<User> loadUsers() {
+        CSVController csvController = new CSVController("resources\\users.csv", userCredentials);
+        userCredentials = csvController.importData();
+        List<User> userList = new ArrayList<>();
+
+        for (HashMap<String, String> userData : userCredentials) {
+            String name = userData.get("name");
+            String username = userData.get("username");
+            String password = userData.get("password");
+            boolean isPremium = Boolean.parseBoolean(userData.get("isPremium"));
+            if (isPremium) {
+                PremiumUser user = new PremiumUser(name, username, password);
+                userList.add(user);
+            } else {
+                BaseUser user = new BaseUser(name, username, password);
+                userList.add(user);
+            }
+        }
+
+        return userList;
+    }
+
+    private void appendData(HashMap<String, String> user) {
+        CSVController csvController = new CSVController("resources\\users.csv");
+        csvController.appendData(user);
+    }
+
+    public User getActiveUser() {
+        return activeUser;
     }
 }

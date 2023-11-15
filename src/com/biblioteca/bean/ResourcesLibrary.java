@@ -1,6 +1,6 @@
 package com.biblioteca.bean;
 
-public class ResourcesLibrary {
+public abstract class ResourcesLibrary {
 
     private String name;
     private String ISBN;
