@@ -1,8 +1,10 @@
 package com.biblioteca.inter;
 
+import java.util.List;
+
 public interface ArchiveInterface {
 
-    void export();
+    void export(List<String[]> data, String fileName);
 
-    void read();
+    List<String[]> read(String fileName);
 }

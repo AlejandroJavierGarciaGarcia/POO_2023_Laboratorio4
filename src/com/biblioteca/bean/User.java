@@ -2,6 +2,8 @@ package com.biblioteca.bean;
 
 import java.util.ArrayList;
 
+import com.biblioteca.bean.objects.ResourcesLibrary;
+
 public abstract class User {
     private String name;
     private String password;

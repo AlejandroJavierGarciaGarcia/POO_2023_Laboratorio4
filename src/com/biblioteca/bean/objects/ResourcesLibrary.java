@@ -1,4 +1,4 @@
-package com.biblioteca.bean;
+package com.biblioteca.bean.objects;
 
 public class ResourcesLibrary {
 
@@ -46,5 +46,10 @@ public class ResourcesLibrary {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    
+    @Override
+    public String toString() {
+        return "Resource: " + name + "\nISBN: " + ISBN + "\nType: " + type + "\nPrice: $" + price;
     }
 }
